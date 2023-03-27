@@ -1,4 +1,5 @@
-<div>
-  <h1>Patient Data App</h1>
+<div id = "header">
+  <h1>Notes App</h1>
+  <a href = "index.html">Home</a>
   <div class="clearBoth"></div>
 </div>

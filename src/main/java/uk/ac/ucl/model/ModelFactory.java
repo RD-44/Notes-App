@@ -1,5 +1,4 @@
 package uk.ac.ucl.model;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -18,10 +17,7 @@ public class ModelFactory
     if (model == null)
     {
       model = new Model();
-      // Note where the data file is stored in the data directory,
-      // and the pathname to locate it. The data here is just some example data,
-      // you replace it with your data file(s)
-      model.readFile(new File("./data/patients.csv"));
+      model.readFile(new File("./items.json"));
     }
     return model;
   }

@@ -1,26 +1,42 @@
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Notes.ItemList" %>
+<%@ page import="Notes.Item" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
   <jsp:include page="/meta.jsp"/>
-  <title>Patient Data App</title>
+  <title>Notes App</title>
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
 <div class="main">
-  <h1>Search Result</h1>
+  <h1>Search Results</h1>
   <%
-    List<String> patients = (List<String>) request.getAttribute("result");
-    if (patients.size() !=0)
-    {
-    %>
+    HashMap<ItemList, ArrayList<Item>> foundLists = (HashMap<ItemList, ArrayList<Item>>) request.getAttribute("result");
+    if (foundLists.size() != 0) { %>
     <ul>
       <%
-        for (String patient : patients)
-        {
+        for (HashMap.Entry<ItemList, ArrayList<Item>> foundList : foundLists.entrySet()) { // Iterate through HashMap pairs
+          String ListName = foundList.getKey().getContents(); // Gets Note name to set it as an attribute
+          session.setAttribute(ListName, foundList.getKey());
       %>
-      <li><%=patient%></li>
+      <ul class="searchItems">
+      <% if(foundList.getValue().size() > 0){ %>
+      <h2>Items found in <%=ListName%>:</h2>
+      <%
+        for(Item foundItem : foundList.getValue()){ // Displays matching items in each list.
+      %>
+        <li><%=foundItem.getContents()%></li>
+      <%}%>
+      </ul>
+      <h2>Click below to go to <%=ListName%>:</h2>
+      <%}%>
+      <form method="POST" action="${pageContext.request.contextPath}/getnotecontent.html">
+        <input class="noteButton" type="submit" name="content" value="<%=ListName%>">
+      </form>
+      <hr>
      <% }
     } else
     {%>
