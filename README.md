@@ -1,1 +1,1 @@
-Example Java web application for COMP0004
+A notes app made using Java. 
