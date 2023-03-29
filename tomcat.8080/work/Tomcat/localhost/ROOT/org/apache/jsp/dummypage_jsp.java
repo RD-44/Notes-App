@@ -12,8 +12,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import java.util.List;
-import Notes.Item;
-import Notes.ItemList;
+import notes.Item;
+import notes.ItemList;
 
 public final class dummypage_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent,

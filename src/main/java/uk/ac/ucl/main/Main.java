@@ -1,7 +1,6 @@
 package uk.ac.ucl.main;
 
 import java.io.File;
-
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
@@ -10,10 +9,7 @@ import org.apache.catalina.webresources.StandardRoot;
 
 public class Main {
   // This is for setting up the tomcat client
-
   public static void main(String[] args) throws Exception {
-    // Fix up stack, get it to work with search
-    // Back button breaks it. If you add a note and go back one, add something, it adds to the next page and loads that
     // Features : Image from computer to store on server, bootstrap, Allow for same name in diff lists.
     // Might have to incorporate unique ids for every Item - or have a look at hash values.
     String webappDirLocation = "src/main/webapp/";

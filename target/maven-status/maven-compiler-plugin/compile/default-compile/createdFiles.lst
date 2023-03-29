@@ -1,0 +1,16 @@
+uk\ac\ucl\model\ModelFactory.class
+Notes\Item.class
+uk\ac\ucl\main\Main.class
+uk\ac\ucl\servlets\getNoteContentServlet.class
+Notes\URL.class
+uk\ac\ucl\model\Model.class
+uk\ac\ucl\servlets\CreateMainNote.class
+Notes\Text.class
+Notes\Image.class
+Notes\ItemList.class
+uk\ac\ucl\servlets\ViewMainNotesServlet.class
+uk\ac\ucl\servlets\DeleteListServlet.class
+uk\ac\ucl\servlets\SearchServlet.class
+uk\ac\ucl\servlets\GoBackServlet.class
+uk\ac\ucl\servlets\DeleteItemServlet.class
+uk\ac\ucl\servlets\CreateItem.class

@@ -1,13 +1,13 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Notes.ItemList" %>
-<%@ page import="Notes.Item" %>
+<%@ page import="notes.ItemList" %>
+<%@ page import="notes.Item" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
 <head>
   <jsp:include page="/meta.jsp"/>
-  <title>Notes App</title>
+  <title>notes App</title>
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
@@ -33,7 +33,7 @@
       </ul>
       <h2>Click below to go to <%=ListName%>:</h2>
       <%}%>
-      <form method="POST" action="${pageContext.request.contextPath}/getnotecontent.html">
+      <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
         <input class="noteButton" type="submit" name="content" value="<%=ListName%>">
       </form>
       <hr>

@@ -1,10 +1,9 @@
 package uk.ac.ucl.servlets;
 
-import Notes.Item;
-import Notes.ItemList;
+import notes.Item;
+import notes.ItemList;
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,13 +24,13 @@ public class SearchServlet extends HttpServlet
     // Use the model to do the search and put the results into the request object sent to the
     // Java Server Page used to display the results.
     Model model = ModelFactory.getModel();
-    HashMap<ItemList, ArrayList<Item>> searchResult = model.searchFor(request.getParameter("searchstring")); // Get's hashmap of list with their items matching the query
+    HashMap<ItemList, ArrayList<Item>> searchResult = model.searchFor(request.getParameter("userinput")); // Gets hashmap of list with their items matching the query
     request.setAttribute("result", searchResult);
 
     // Invoke the JSP page.
     ServletContext context = getServletContext();
     RequestDispatcher dispatch = context.getRequestDispatcher("/searchResult.jsp");
     dispatch.forward(request, response);
-    response.setContentType("text/html"); // ?
+    response.setContentType("text/html");
   }
 }

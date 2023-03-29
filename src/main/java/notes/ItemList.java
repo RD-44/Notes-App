@@ -1,44 +1,52 @@
-package Notes;
+package notes;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import htmlfilter.Filter;
 
 import java.util.ArrayList;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "contents")
 public class ItemList extends Item{ // lists of items are also an item type, to allow nested classes.
     private ArrayList<Item> items;
-
-
     private ArrayList<ItemList> lists;
+    private int childId;
 
-    public ItemList(@JsonProperty("content") String name, @JsonProperty("items") ArrayList<Item> items, @JsonProperty("lists") ArrayList<ItemList> lists) {
-        super(name);
-        this.items = items;
-        this.lists = lists;
-    }
-
-    public ItemList(String name, ArrayList<Item> items, ItemList parent) {
-        super(name);
-        this.items = items;
-        this.lists = new ArrayList<>();
-    }
-
-    public ItemList(String name) {
-        super(name);
+    @JsonCreator
+    public ItemList(@JsonProperty("id")  int id, @JsonProperty("contents") String name, @JsonProperty("childId") int childId) {
+        super(id, name);
+        this.childId = childId;
         this.items = new ArrayList<>();
         this.lists = new ArrayList<>();
+    }
+
+    public ItemList(int id, String name) {
+        super(id, name);
+        this.childId = 1;
+        this.items = new ArrayList<>();
+        this.lists = new ArrayList<>();
+    }
+
+    public int getChildId(){
+        return childId;
+    }
+
+    public String getEditText() {
+        return "Enter new list name here:";
+    }
+
+    public String display() {
+        return Filter.parse(contents);
     }
 
 
     public void addItem(Item newItem){
         items.add(newItem);
+        childId++;
     }
     public void addItem(ItemList newList){
         lists.add(newList);
+        childId++;
     }
 
     public ArrayList<Item> getItems(){
@@ -56,5 +64,7 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
     public void deleteItem(Item item){
         items.remove(item);
     }
+
+
 
 }

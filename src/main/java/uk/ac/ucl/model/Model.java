@@ -2,7 +2,7 @@ package uk.ac.ucl.model;
 import java.io.*;
 import java.util.*;
 
-import Notes.*;
+import notes.*;
 import com.fasterxml.jackson.databind.*;
 
 public class Model
@@ -15,9 +15,9 @@ public class Model
     return main;
   }
 
-  public void readFile(File file) throws IOException {
+  public void readFile() throws IOException {
     ObjectMapper mapper = new ObjectMapper(); // Used to map json entries to objects.
-    try (MappingIterator<ItemList> it = mapper.readerFor(ItemList.class).readValues(file)){ // Maps to the ItemList class
+    try (MappingIterator<ItemList> it = mapper.readerFor(ItemList.class).readValues(new File("./data/items.json"))){ // Maps to the ItemList class
       if (it.hasNextValue()) {
         try{
           main = it.nextValue();
@@ -25,17 +25,18 @@ public class Model
           System.err.println("Problem reading file: " + e.getMessage());
         }
       }else{
-        main = new ItemList("MAIN"); // If json is empty we make a new list
+        main = new ItemList(0, "MAIN"); // If json is empty we make a new list
         updateJSON();
       }
+    }catch (IOException e){
+      throw new RuntimeException(e);
     }
     history = new Stack<>(); // Initialise stack to store history
   }
 
   private void updateJSON(){ // Rewrites the main list to the json file to save any updates made.
     ObjectMapper mapper = new ObjectMapper();
-    try (SequenceWriter seq = mapper.writer()
-            .writeValues(new FileOutputStream("items.json"))) {
+    try (SequenceWriter seq = mapper.writer().writeValues(new FileOutputStream("./data/items.json"))){
       seq.write(main);
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -63,18 +64,19 @@ public class Model
   }
 
   private void insert(ItemList currList, ItemList parent, String content, int type){
-    for (ItemList note : currList.getLists()){
-      if (note == parent){
+    for (ItemList list : currList.getLists()){
+      if (list == parent){
+        int id = list.getChildId();
         switch (type) {
-          case URL -> note.addItem(new URL(content));
-          case TEXT -> note.addItem(new Text(content));
-          case IMG -> note.addItem(new Image(content));
-          case LIST -> note.addItem(new ItemList(content));
+          case URL -> list.addItem(new URL(id, content));
+          case TEXT -> list.addItem(new Text(id, content));
+          case IMG -> list.addItem(new Image(id, content));
+          case LIST -> list.addItem(new ItemList(id, content));
         }
         updateJSON();
         return; // Break out of loop and recursion once found.
       }
-      insert(note, parent, content, type); // Traverse until found.
+      insert(list, parent, content, type); // Traverse until found.
     }
   }
 
@@ -88,7 +90,7 @@ public class Model
   }
 
   public void addMainNote(String name){
-    main.addItem(new ItemList(name));
+    main.addItem(new ItemList(main.getChildId(), name));
     updateJSON();
   }
 
@@ -114,8 +116,12 @@ public class Model
     updateJSON();
   }
 
+  public void renameItem(Item toRename, String newName){
+    toRename.setContents(newName);
+    updateJSON();
+  }
 
-
+  // Stack operations
   public ItemList prev(){
     try {
       return history.pop();

@@ -1,7 +1,7 @@
 package uk.ac.ucl.servlets;
 
 
-import Notes.ItemList;
+import notes.ItemList;
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
 

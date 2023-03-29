@@ -1,17 +1,18 @@
 
 <html>
 <head>
-  <title>Notes App</title>
+  <title>notes App</title>
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
 <div class="main">
   <h1>Search</h1>
-  <form class="searchForm" method="POST" action="/runsearch.html"> <!-- this indicates a request which gets mapped to a servlet
+  <form class="inputForm" onsubmit="return submitForm(this)" method="POST" action="/runsearch.html"> <!-- this indicates a request which gets mapped to a servlet
   could have multiple requests to same servlet -->
-    <input type="text" class="searchText" name="searchstring" placeholder="Enter search keyword here"/>
+    <input type="text" class="inputText" name="userinput" placeholder="Enter search keyword here"/>
     <input type="submit" class="searchButton" value="Search"/>
   </form>
 </div>
+<script src="validation.js"></script>
 </body>
 </html>

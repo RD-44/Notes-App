@@ -1,6 +1,4 @@
 package uk.ac.ucl.servlets;
-
-import Notes.ItemList;
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
 
@@ -13,19 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/additem.html")
-public class CreateItem extends HttpServlet {
+@WebServlet("/addnote.html")
+public class AddMainListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         Model model = ModelFactory.getModel();
-        String content = request.getParameter("notename");
-        ItemList list = (ItemList) request.getSession().getAttribute("curr");
-        String type = request.getParameter("add"); // Gets the type of item to add.
-        model.addItem(content, list, type);
-        request.setAttribute("list", list); // Sets list with added item as an attribute
+        model.addMainNote(request.getParameter("userinput"));
+        request.setAttribute("list", model.getMain());
         // Invoke the JSP page.
         ServletContext context = getServletContext();
-        RequestDispatcher dispatch = context.getRequestDispatcher("/noteContents.jsp");
+        RequestDispatcher dispatch = context.getRequestDispatcher("/mainNotes.jsp");
         dispatch.forward(request, response);
         response.setContentType("text/html");
     }

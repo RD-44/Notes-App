@@ -5,7 +5,7 @@
 body{
   padding: 0;
   margin: 0;
-  background-color: darkslategray;
+  background-color: black;
   color: white;
 }
 
@@ -54,18 +54,55 @@ a:hover{
   background-color: #9147ff;
   color: white;
   padding: 0 20px;
-  margin-bottom: 10px;
 }
 .noteButton:hover {
   transition: 0.4s;
   background-color: #555ce8;
 }
 
-.searchForm{
+.deleteButton{
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 13px;
+  height: 30px;
+  background-color: darkred;
+  color: white;
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+.deleteButton:hover {
+  transition: 0.4s;
+  background-color: red;
+}
+
+.renameButton{
+  display: inline-block;
+  outline: 0;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 13px;
+  height: 30px;
+  background-color: darkblue;
+  color: white;
+  padding: 0 20px;
+  margin-bottom: 10px;
+}
+.renameButton:hover {
+  transition: 0.4s;
+  background-color: navy;
+}
+
+.inputForm{
   padding-left: 20px;
   display: inline-block;
 }
-.searchText {
+.inputText {
   font-size: 14px;
   width: 400px;
   border-radius: 6px;
@@ -78,10 +115,10 @@ a:hover{
   height: 36px;
   float: left
 }
-.searchText:hover {
+.inputText:hover {
   border-color: #ccc;
 }
-.searchText:focus{
+.inputText:focus{
   border-color: #9147ff;
 }
 
@@ -118,3 +155,15 @@ hr{
   height: 1px;
   background-color:#4d8cf5;
 }
+
+td {
+  border: solid 3px white;
+  padding: 10px 30px;
+}
+
+img{
+  width: 400px;
+  height: auto;
+}
+
+
