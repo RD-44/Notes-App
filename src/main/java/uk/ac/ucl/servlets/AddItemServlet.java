@@ -1,9 +1,7 @@
 package uk.ac.ucl.servlets;
-
-import notes.ItemList;
+import uk.ac.ucl.items.ItemList;
 import uk.ac.ucl.model.Model;
 import uk.ac.ucl.model.ModelFactory;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,9 +21,9 @@ public class AddItemServlet extends HttpServlet {
         String type = request.getParameter("add"); // Gets the type of item to add.
         model.addItem(content, list, type);
         request.setAttribute("list", list); // Sets list with added item as an attribute
-        // Invoke the JSP page.
+        // Invoke the JSP
         ServletContext context = getServletContext();
-        RequestDispatcher dispatch = context.getRequestDispatcher("/noteContents.jsp");
+        RequestDispatcher dispatch = context.getRequestDispatcher("/listContents.jsp");
         dispatch.forward(request, response);
         response.setContentType("text/html");
     }

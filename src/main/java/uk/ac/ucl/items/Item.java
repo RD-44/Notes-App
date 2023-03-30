@@ -1,11 +1,11 @@
-package notes;
+package uk.ac.ucl.items;
 
 import com.fasterxml.jackson.annotation.*;
 import java.io.Serializable;
 
 // Below ensures subclass information is stored in the json file
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME) // Stores subclass name in the "type" field in the JSON file.
-@JsonSubTypes({ // Maps name to its corresponding class
+@JsonSubTypes({ // Maps names to each subclass
         @JsonSubTypes.Type(value = Text.class, name = "Text"),
         @JsonSubTypes.Type(value = Image.class, name = "Image"),
         @JsonSubTypes.Type(value = URL.class, name = "URL"),
@@ -28,6 +28,8 @@ public abstract class Item implements Serializable{
     @JsonIgnore
     public abstract String getEditText(); // Used to get the right text to appear for the edit input box.
 
+    // Used to get the text which will be displayed in html when this item is shown on a page.
+    // This is heavily related to the content, hence it is a protected attribute.
     public abstract String display();
 
     public int getId() {

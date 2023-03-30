@@ -1,13 +1,11 @@
-package notes;
-
+package uk.ac.ucl.items;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import htmlfilter.Filter;
-
+import uk.ac.ucl.htmlfilter.Filter;
 import java.util.ArrayList;
 
-public class ItemList extends Item{ // lists of items are also an item type, to allow nested classes.
+public class ItemList extends Item{ // lists of items are also an item type, to allow nested lists.
     private ArrayList<Item> items;
     private ArrayList<ItemList> lists;
     private int childId;
@@ -20,7 +18,8 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
         this.lists = new ArrayList<>();
     }
 
-    public ItemList(int id, String name) {
+    //Alternative constructor used for making new lists that don't have a previous childId
+    public ItemList(int id, String name){
         super(id, name);
         this.childId = 1;
         this.items = new ArrayList<>();
@@ -38,7 +37,6 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
     public String display() {
         return Filter.parse(contents);
     }
-
 
     public void addItem(Item newItem){
         items.add(newItem);
@@ -64,7 +62,5 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
     public void deleteItem(Item item){
         items.remove(item);
     }
-
-
 
 }

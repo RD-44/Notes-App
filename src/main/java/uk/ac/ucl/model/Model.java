@@ -1,8 +1,7 @@
 package uk.ac.ucl.model;
 import java.io.*;
 import java.util.*;
-
-import notes.*;
+import uk.ac.ucl.items.*;
 import com.fasterxml.jackson.databind.*;
 
 public class Model
@@ -15,18 +14,18 @@ public class Model
     return main;
   }
 
-  public void readFile() throws IOException {
+  public void readFile(){
     ObjectMapper mapper = new ObjectMapper(); // Used to map json entries to objects.
     try (MappingIterator<ItemList> it = mapper.readerFor(ItemList.class).readValues(new File("./data/items.json"))){ // Maps to the ItemList class
       if (it.hasNextValue()) {
         try{
-          main = it.nextValue();
+          main = it.nextValue(); // json file stores a single list object which contains all the lists we need.
         }catch(JsonMappingException e){
           System.err.println("Problem reading file: " + e.getMessage());
         }
       }else{
         main = new ItemList(0, "MAIN"); // If json is empty we make a new list
-        updateJSON();
+        updateJson();
       }
     }catch (IOException e){
       throw new RuntimeException(e);
@@ -34,7 +33,7 @@ public class Model
     history = new Stack<>(); // Initialise stack to store history
   }
 
-  private void updateJSON(){ // Rewrites the main list to the json file to save any updates made.
+  private void updateJson(){ // Rewrites the main list to the json file to save any updates made.
     ObjectMapper mapper = new ObjectMapper();
     try (SequenceWriter seq = mapper.writer().writeValues(new FileOutputStream("./data/items.json"))){
       seq.write(main);
@@ -45,6 +44,8 @@ public class Model
 
   private void traverseSearch(ItemList itemList, String keyword){
      // Recursively visits all lists via depth first search.
+    // Uses a hashmap where the key is a list, the value is an arraylist of matching items found in that list.
+    // Matching lists also appear as keys in the hashmaps, and if they contain no matching items the value is an empty arraylist
       if (itemList.getContents().contains(keyword)){
         results.put(itemList, new ArrayList<>());
       }
@@ -73,15 +74,14 @@ public class Model
           case IMG -> list.addItem(new Image(id, content));
           case LIST -> list.addItem(new ItemList(id, content));
         }
-        updateJSON();
+        updateJson();
         return; // Break out of loop and recursion once found.
       }
       insert(list, parent, content, type); // Traverse until found.
     }
   }
 
-  public HashMap<ItemList, ArrayList<Item>> searchFor(String keyword)
-  {
+  public HashMap<ItemList, ArrayList<Item>> searchFor(String keyword){
     results = new HashMap<>();
     for (ItemList itemList : main.getLists()){
       traverseSearch(itemList, keyword);
@@ -89,9 +89,9 @@ public class Model
     return results;
   }
 
-  public void addMainNote(String name){
+  public void addMainList(String name){
     main.addItem(new ItemList(main.getChildId(), name));
-    updateJSON();
+    updateJson();
   }
 
   public void addItem(String name, ItemList parent, String type){
@@ -99,7 +99,7 @@ public class Model
       insert(main, parent, name, TEXT);
     }else if (type.contains("url")){
       insert(main, parent, name, URL);
-    }else if (type.contains("note")){
+    }else if (type.contains("list")){
       insert(main, parent, name, LIST);
     }else if (type.contains("image")){
       insert(main, parent, name, IMG);
@@ -108,17 +108,17 @@ public class Model
 
   public void delList(ItemList listToDelete, ItemList parent){
     parent.deleteList(listToDelete);
-    updateJSON();
+    updateJson();
   }
 
   public void delItem(Item itemToDelete, ItemList parent){
     parent.deleteItem(itemToDelete);
-    updateJSON();
+    updateJson();
   }
 
   public void renameItem(Item toRename, String newName){
     toRename.setContents(newName);
-    updateJSON();
+    updateJson();
   }
 
   // Stack operations
@@ -135,5 +135,7 @@ public class Model
     history.push(list);
   }
 
-
+  public void emptyStack(){
+    history = new Stack<>();
+  }
 }

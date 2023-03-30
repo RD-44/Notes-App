@@ -11,9 +11,8 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import notes.ItemList;
-import htmlfilter.Filter;
-import htmlfilter.Filter;
+import uk.ac.ucl.items.ItemList;
+import uk.ac.ucl.htmlfilter.Filter;
 
 public final class mainNotes_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent,
@@ -34,8 +33,8 @@ public final class mainNotes_jsp extends org.apache.jasper.runtime.HttpJspBase
     _jspx_imports_packages.add("javax.servlet.http");
     _jspx_imports_packages.add("javax.servlet.jsp");
     _jspx_imports_classes = new java.util.HashSet<>();
-    _jspx_imports_classes.add("notes.ItemList");
-    _jspx_imports_classes.add("htmlfilter.Filter");
+    _jspx_imports_classes.add("uk.ac.ucl.notes.ItemList");
+    _jspx_imports_classes.add("uk.ac.ucl.htmlfilter.Filter");
   }
 
   private volatile javax.el.ExpressionFactory _el_expressionfactory;
@@ -127,12 +126,12 @@ public final class mainNotes_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("  ");
       org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "/meta.jsp", out, false);
       out.write("\r\n");
-      out.write("  <title>notes App</title>\r\n");
+      out.write("  <title>uk.ac.ucl.notes App</title>\r\n");
       out.write("</head>\r\n");
       out.write("<body>\r\n");
       org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "/header.jsp", out, false);
       out.write("\r\n");
-      out.write("<h1>Your notes: </h1>\r\n");
+      out.write("<h1>Your uk.ac.ucl.notes: </h1>\r\n");
       out.write("<table>\r\n");
       out.write("  <tr>\r\n");
       out.write("    <td>\r\n");

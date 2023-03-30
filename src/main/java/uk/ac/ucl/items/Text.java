@@ -1,7 +1,7 @@
-package notes;
+package uk.ac.ucl.items;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import htmlfilter.Filter;
+import uk.ac.ucl.htmlfilter.Filter;
 
 public class Text extends Item{
     public Text(@JsonProperty("id") int id, @JsonProperty("contents") String contents) {

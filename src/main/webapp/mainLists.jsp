@@ -1,15 +1,15 @@
-<%@ page import="notes.ItemList" %>
-<%@ page import="htmlfilter.Filter" %>
-<%@ page import="htmlfilter.Filter" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="uk.ac.ucl.items.ItemList" %>
+<%@ page import="uk.ac.ucl.htmlfilter.Filter" %>
+<%@ page import="uk.ac.ucl.htmlfilter.Filter" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
-  <jsp:include page="/meta.jsp"/>
-  <title>notes App</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+  <title>Main Lists</title>
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
-<h1>Your notes: </h1>
+<h1>Main Lists</h1>
 <table>
   <tr>
     <td>
@@ -35,7 +35,7 @@
   <tr>
     <td>
       <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-        <input class="noteButton" type="submit" name="content" value="<%=content%>">
+        <input class="listButton" type="submit" name="content" value="<%=content%>">
       </form>
     </td>
     <td>
@@ -45,18 +45,17 @@
     </td>
     <td>
       <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/renamelist.html">
-        <input type="text" name="userinput" value="<%=content%>" placeholder="Enter new list name here:"/>
+        <input type="text" name="userinput" class = "inputText" value="<%=content%>" placeholder="Enter new list name here:"/>
         <button class="renameButton" type="submit" name="list" value="<%=content%>">Rename</button>
       </form>
     </td>
   </tr>
-  <% }%>
+  <%}%>
 </table>
-<form class="inputForm" method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/addnote.html"> <!-- Only adding a list is allowed in the main list-->
-  <input type="text" class="inputText" name="userinput" placeholder="Enter note name here"/>
-  <input type="submit" class="searchButton" value="CREATE!"/>
+<form class="inputForm" method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/addlist.html"> <!-- Only adding a list is allowed in the main list-->
+  <input type="text" class="inputText" name="userinput" placeholder="Enter list name here"/>
+  <input type="submit" class="searchButton" value="Add list"/>
 </form>
-<jsp:include page="/footer.jsp"/>
 <script src="validation.js"></script>
 </body>
 </html>

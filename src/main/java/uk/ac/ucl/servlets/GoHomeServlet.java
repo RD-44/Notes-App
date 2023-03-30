@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/addlist.html")
-public class AddMainListServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+@WebServlet("/gohome.html")
+public class GoHomeServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        //Empty the history stack in the model
         Model model = ModelFactory.getModel();
-        model.addMainList(request.getParameter("userinput"));
-        request.setAttribute("list", model.getMain());
-        // Invoke the JSP
+        model.emptyStack();
+        //Go back to homepage
         ServletContext context = getServletContext();
-        RequestDispatcher dispatch = context.getRequestDispatcher("/mainLists.jsp");
+        RequestDispatcher dispatch = context.getRequestDispatcher("/index.html");
         dispatch.forward(request, response);
         response.setContentType("text/html");
     }

@@ -12,7 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import java.util.List;
-import notes.ItemList;
+import uk.ac.ucl.items.ItemList;
 
 public final class patientList_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent,
@@ -132,7 +132,7 @@ public final class patientList_jsp extends org.apache.jasper.runtime.HttpJspBase
       org.apache.jasper.runtime.JspRuntimeLibrary.include(request, response, "/header.jsp", out, false);
       out.write("\r\n");
       out.write("<div class=\"main\">\r\n");
-      out.write("  <h1>Your notes: </h1>\r\n");
+      out.write("  <h1>Your uk.ac.ucl.notes: </h1>\r\n");
       out.write("  <ul>\r\n");
       out.write("    ");
 

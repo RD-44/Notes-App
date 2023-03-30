@@ -1,1 +1,1 @@
-A notes app made using Java. 
+A uk.ac.ucl.items app made using Java. 

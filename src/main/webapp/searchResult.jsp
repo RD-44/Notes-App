@@ -1,13 +1,13 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="notes.ItemList" %>
-<%@ page import="notes.Item" %>
+<%@ page import="uk.ac.ucl.items.ItemList" %>
+<%@ page import="uk.ac.ucl.items.Item" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
 <head>
-  <jsp:include page="/meta.jsp"/>
-  <title>notes App</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+  <title>Search Results</title>
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
@@ -19,7 +19,7 @@
     <ul>
       <%
         for (HashMap.Entry<ItemList, ArrayList<Item>> foundList : foundLists.entrySet()) { // Iterate through HashMap pairs
-          String ListName = foundList.getKey().getContents(); // Gets Note name to set it as an attribute
+          String ListName = foundList.getKey().getContents(); // Gets list name to set it as an attribute
           session.setAttribute(ListName, foundList.getKey());
       %>
       <ul class="searchItems">
@@ -34,7 +34,7 @@
       <h2>Click below to go to <%=ListName%>:</h2>
       <%}%>
       <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-        <input class="noteButton" type="submit" name="content" value="<%=ListName%>">
+        <input class="listButton" type="submit" name="content" value="<%=ListName%>">
       </form>
       <hr>
      <% }
@@ -44,6 +44,5 @@
   <%}%>
   </ul>
 </div>
-<jsp:include page="/footer.jsp"/>
 </body>
 </html>

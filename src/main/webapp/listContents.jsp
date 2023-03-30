@@ -1,7 +1,7 @@
-<%@ page import="java.util.List" %>
-<%@ page import="notes.Item" %>
-<%@ page import="notes.ItemList" %>
-<%@ page import="htmlfilter.Filter" %>
+<%@ page import="uk.ac.ucl.items.Item" %>
+<%@ page import="uk.ac.ucl.items.ItemList" %>
+<%@ page import="uk.ac.ucl.htmlfilter.Filter" %>
+<%@ page import="java.util.ArrayList" %>
 <%ItemList currList = (ItemList) request.getAttribute("list");%>
 <%session.setAttribute("curr", currList); //  Stores current list as an attribute (needed for deletion, adding, going back)%>
 
@@ -13,9 +13,10 @@
   <link rel="stylesheet" type="text/css" href="styles.css"/>
 </head>
 <body>
+<jsp:include page="/header.jsp"/>
 <h1><%=currList.getContents()%></h1>
 <form method="POST" action="${pageContext.request.contextPath}/goback.html">
-  <input class="noteButton" type="submit" name="content" value="Go back">
+  <input class="listButton" type="submit" name="content" value="Go back">
 </form>
 <table>
   <tr>
@@ -30,9 +31,10 @@
     </td>
   </tr>
   <%
-  List<Item> items = currList.getItems();
-  List<ItemList> lists = currList.getLists();
+  ArrayList<Item> items = currList.getItems();
+  ArrayList<ItemList> lists = currList.getLists();
   int listIndex = 0, itemIndex = 0;
+  // Loops are used to output the lists and items in the order they were created by comparing their id values
   while(listIndex < lists.size() && itemIndex < items.size()) {
     Item item = items.get(itemIndex);
     ItemList list = lists.get(listIndex);
@@ -46,7 +48,7 @@
         </td>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/deleteitem.html">
-            <button class="deleteButton"  onclick="alert('Yo')" type="submit" name="item" value="<%=content%>">Delete</button>
+            <button class="deleteButton"  onsubmit="return confirm('Do you really want to delete this item?');" type="submit" name="item" value="<%=content%>">Delete</button>
           </form>
         </td>
         <td>
@@ -63,11 +65,11 @@
       <tr>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-            <input class="noteButton" type="submit" name="content" value="<%=content%>">
+            <input class="listButton" type="submit" name="content" value="<%=content%>">
           </form>
         </td>
         <td>
-          <form method="POST" action="${pageContext.request.contextPath}/deletelist.html">
+          <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deletelist.html">
             <button class="deleteButton" type="submit" name="list" value="<%=content%>">Delete</button>
           </form>
         </td>
@@ -92,7 +94,7 @@
         <p><%=item.display()%></p>
       </td>
       <td>
-        <form method="POST" action="${pageContext.request.contextPath}/deleteitem.html">
+        <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deleteitem.html">
           <button class="deleteButton"  type="submit" name="item" value="<%=content%>">Delete</button>
         </form>
       </td>
@@ -112,11 +114,11 @@
       <tr>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-            <input class="noteButton" type="submit" name="content" value="<%=content%>">
+            <input class="listButton" type="submit" name="content" value="<%=content%>">
           </form>
         </td>
         <td>
-          <form method="POST" action="${pageContext.request.contextPath}/deletelist.html">
+          <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deletelist.html">
             <button class="deleteButton" type="submit" name="list" value="<%=content%>">Delete</button>
           </form>
         </td>
@@ -133,9 +135,10 @@
 </table>
 <form class="inputForm" onsubmit="return submitForm(this)" method="POST" action="${pageContext.request.contextPath}/additem.html"> <!-- this indicates a request which gets mapped to a servlet
      could have multiple requests to same servlet -->
+  <p>One you enter something, you can choose to add text, a list, an image or a URL from it. Note that urls must be written in the correct form and images can only be added from a url to the image.</p>
   <input type="text" class="inputText" name="userinput" placeholder="Enter contents here"/>
   <input type="submit" class="searchButton" name="add" value="Add text"/>
-  <input type="submit" class="searchButton" name="add" value="Add note"/>
+  <input type="submit" class="searchButton" name="add" value="Add list"/>
   <input type="submit" class="searchButton" name="add" value="Add url"/>
   <input type="submit" class="searchButton" name="add" value="Add image"/>
 </form>

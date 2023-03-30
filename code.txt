@@ -1,7 +1,7 @@
 package uk.ac.ucl.servlets;
 
-import notes.Item;
-import notes.ItemList;
+import uk.ac.ucl.items.Item;
+import uk.ac.ucl.items.ItemList;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,12 +19,12 @@ import java.util.Stack;
 
 @WebServlet("/getnotes.html")
 public class getSubNote extends HttpServlet {
-    private Stack<listOfItems> notes = new Stack();
+    private Stack<listOfItems> uk.ac.ucl.items = new Stack();
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<Item> list = new ArrayList<>();
         Boolean done = false;
         while (!done) {
-            if (notes.isEmpty()) {
+            if (uk.ac.ucl.items.isEmpty()) {
                 // If nothing in stack, we just entered so display the note lists.
                 done = true;
                 ObjectMapper Obj = new ObjectMapper(); // Used to map json entries to objects.
@@ -40,7 +40,7 @@ public class getSubNote extends HttpServlet {
                             // FINDS LIST OF NOTES IN JSON CORRESPONDING TO THE PRESSED BUTTON
                             if (v.getContents().contains(request.getParameter(("content")).toString())) {
                                 System.out.println(request.getParameter(("content")).toString());
-                                notes.push(v); // Adds this to stack, so when visiting a list inside a list we know where tf to search.
+                                uk.ac.ucl.items.push(v); // Adds this to stack, so when visiting a list inside a list we know where tf to search.
                                 break; //Once we have found the needed list, we can exit the loop
                             }
                         } catch (JsonMappingException e) {
@@ -49,18 +49,18 @@ public class getSubNote extends HttpServlet {
                     }
                 }
                 //If each listofitems in the json did not match the required one, it must have already been inserted
-                if(!notes.isEmpty() && notes.peek().getContents().contains(request.getParameter(("content")).toString())){
-                    for (Item x : notes.peek().getItems()) { // Got to check if it matches request.getParameter(("content") first. Only
+                if(!uk.ac.ucl.items.isEmpty() && uk.ac.ucl.items.peek().getContents().contains(request.getParameter(("content")).toString())){
+                    for (Item x : uk.ac.ucl.items.peek().getItems()) { // Got to check if it matches request.getParameter(("content") first. Only
                         // then can u add it to the stack and add its contents to the arraylist as this is a listofitems.
                         list.add(x);
                     }
                 }
             } else {
-                for (Item maybeList : notes.peek().getItems()) { // Got to check if it matches request.getParameter(("content") first. Only
+                for (Item maybeList : uk.ac.ucl.items.peek().getItems()) { // Got to check if it matches request.getParameter(("content") first. Only
                     // then can u add it to the stack and add it's contents to the arraylist as this is a listofitems.
                     if (maybeList.getContents().contains(request.getParameter(("content")))) {
-                        notes.push((listOfItems) maybeList);
-                        for (Item y : notes.peek().getItems()) {
+                        uk.ac.ucl.items.push((listOfItems) maybeList);
+                        for (Item y : uk.ac.ucl.items.peek().getItems()) {
                             list.add(y);
                         }
                         done = true;
@@ -68,7 +68,7 @@ public class getSubNote extends HttpServlet {
                     }
                 }
             }
-            notes.pop();
+            uk.ac.ucl.items.pop();
         }
         request.setAttribute("list", list);
         ServletContext context = getServletContext();
