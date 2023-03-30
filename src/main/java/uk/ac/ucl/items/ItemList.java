@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ItemList extends Item{ // lists of items are also an item type, to allow nested lists.
     private ArrayList<Item> items;
     private ArrayList<ItemList> lists;
-    private int childId;
+    private int childId; // Used to assign ids to children items
 
     @JsonCreator
     public ItemList(@JsonProperty("id")  int id, @JsonProperty("contents") String name, @JsonProperty("childId") int childId) {
@@ -18,7 +18,7 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
         this.lists = new ArrayList<>();
     }
 
-    //Alternative constructor used for making new lists that don't have a previous childId
+    //Alternative constructor used for making new lists, which don't have a previous childId
     public ItemList(int id, String name){
         super(id, name);
         this.childId = 1;
@@ -35,14 +35,15 @@ public class ItemList extends Item{ // lists of items are also an item type, to 
     }
 
     public String display() {
-        return Filter.parse(contents);
+        return Filter.filter(contents);
     }
 
     public void addItem(Item newItem){
         items.add(newItem);
         childId++;
     }
-    public void addItem(ItemList newList){
+
+    public void addList(ItemList newList){
         lists.add(newList);
         childId++;
     }

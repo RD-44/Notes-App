@@ -17,10 +17,10 @@ public class EditItemServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         Model model = ModelFactory.getModel();
-        ItemList parent = (ItemList) request.getSession().getAttribute("curr"); // Gets list containing list to delete
+        ItemList parent = (ItemList) request.getSession().getAttribute("curr"); // Gets list containing item to edit
         Item itemToRename = (Item) request.getSession().getAttribute(request.getParameter("item"));
         model.renameItem(itemToRename, request.getParameter("userinput"));
-        request.setAttribute("list", parent); // Sets parent with deleted item as an attribute
+        request.setAttribute("list", parent); // Sets parent of edited item as an attribute
         // Invoke the JSP
         ServletContext context = getServletContext();
         RequestDispatcher dispatch = context.getRequestDispatcher("/listContents.jsp");

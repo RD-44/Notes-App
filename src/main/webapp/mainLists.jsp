@@ -24,29 +24,28 @@
   </tr>
   <%
     ItemList mainList = (ItemList) request.getAttribute("list");
-
     session.setAttribute("curr", mainList); //  Used for going back
 
     for (ItemList list : mainList.getLists()) // mainList is purely a list of lists. We display each one here.
     {
-      session.setAttribute(list.getContents(), list);
-      String content = Filter.parse(list.getContents());
+      String id = list.getId() + "";
+      session.setAttribute(id, list);
   %>
   <tr>
     <td>
       <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-        <input class="listButton" type="submit" name="content" value="<%=content%>">
+        <button class="listButton" type="submit" name="content" value="<%=id%>"><%=list.display()%></button>
       </form>
     </td>
     <td>
       <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deletelist.html">
-        <button class="deleteButton" type="submit" name="list" value="<%=content%>">Delete</button>
+        <button class="deleteButton" type="submit" name="list" value="<%=id%>">Delete</button>
       </form>
     </td>
     <td>
-      <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/renamelist.html">
-        <input type="text" name="userinput" class = "inputText" value="<%=content%>" placeholder="Enter new list name here:"/>
-        <button class="renameButton" type="submit" name="list" value="<%=content%>">Rename</button>
+      <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/editlist.html">
+        <input type="text" name="userinput" class = "inputText" value="<%=Filter.filter(list.getContents())%>" placeholder="Enter new list name here:"/>
+        <button class="renameButton" type="submit" name="list" value="<%=id%>">Rename</button>
       </form>
     </td>
   </tr>

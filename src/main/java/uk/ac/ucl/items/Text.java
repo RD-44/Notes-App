@@ -9,7 +9,7 @@ public class Text extends Item{
     }
 
     public String display() {
-        return Filter.parse(contents);
+        return Filter.filter(contents);
     }
 
     public String getEditText() {

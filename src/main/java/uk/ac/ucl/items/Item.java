@@ -17,7 +17,8 @@ public abstract class Item implements Serializable{
     protected String contents;
 
     public Item(@JsonProperty("id") int id, @JsonProperty("contents") String contents){
-        this.id = id; // Number which is unique for items in the same list. Used to indicate positioning in the HTML page.
+        this.id = id; // Number which is unique for items in the same list.
+        //id is used to position items in the right order on a page and distinguish between items of the same content.
         this.contents = contents; // String which contains the information that will be shown for this item.
     }
 
@@ -29,7 +30,7 @@ public abstract class Item implements Serializable{
     public abstract String getEditText(); // Used to get the right text to appear for the edit input box.
 
     // Used to get the text which will be displayed in html when this item is shown on a page.
-    // This is heavily related to the content, hence it is a protected attribute.
+    // This is heavily related to the content, hence content is a protected attribute.
     public abstract String display();
 
     public int getId() {

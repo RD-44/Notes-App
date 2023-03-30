@@ -2,6 +2,7 @@
 <%@ page import="uk.ac.ucl.items.ItemList" %>
 <%@ page import="uk.ac.ucl.items.Item" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 
 <html>
@@ -18,23 +19,26 @@
     if (foundLists.size() != 0) { %>
     <ul>
       <%
-        for (HashMap.Entry<ItemList, ArrayList<Item>> foundList : foundLists.entrySet()) { // Iterate through HashMap pairs
-          String ListName = foundList.getKey().getContents(); // Gets list name to set it as an attribute
-          session.setAttribute(ListName, foundList.getKey());
+        for (HashMap.Entry<ItemList, ArrayList<Item>> entry : foundLists.entrySet()) { // Iterate through HashMap of search results
+          ItemList list = entry.getKey();
+          String id = Objects.hashCode(list)+"";// Uses hashes to avoid mixing up items from 2 different lists with the same id
+          session.setAttribute(id, list);
+          ArrayList<Item> items = entry.getValue();
       %>
       <ul class="searchItems">
-      <% if(foundList.getValue().size() > 0){ %>
-      <h2>Items found in <%=ListName%>:</h2>
+      <% if(items.size() > 0){ %>
+      <h2>Items found in <%=list.display()%>:</h2>
       <%
-        for(Item foundItem : foundList.getValue()){ // Displays matching items in each list.
+        for(Item foundItem : items){ // Displays matching items in each list.
       %>
-        <li><%=foundItem.getContents()%></li>
+        <li><%=foundItem.display()%></li>
       <%}%>
       </ul>
-      <h2>Click below to go to <%=ListName%>:</h2>
+      <h2>Click below to go to <%=list.display()%>:</h2>
       <%}%>
+      <!--If just the note name itself matches, then the below alone will be outputted. -->
       <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-        <input class="listButton" type="submit" name="content" value="<%=ListName%>">
+        <button class="listButton" type="submit" name="content" value="<%=id%>"><%=list.display()%></button>
       </form>
       <hr>
      <% }

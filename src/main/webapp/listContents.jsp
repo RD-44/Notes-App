@@ -39,8 +39,8 @@
     Item item = items.get(itemIndex);
     ItemList list = lists.get(listIndex);
     if (item.getId() < list.getId()) {
-      session.setAttribute(item.getContents(), item);
-      String content = Filter.parse(item.getContents());
+      String id = item.getId() + "";
+      session.setAttribute(id, item);
   %>
       <tr>
         <td>
@@ -48,35 +48,35 @@
         </td>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/deleteitem.html">
-            <button class="deleteButton"  onsubmit="return confirm('Do you really want to delete this item?');" type="submit" name="item" value="<%=content%>">Delete</button>
+            <button class="deleteButton"  onsubmit="return confirm('Do you really want to delete this item?');" type="submit" name="item" value="<%=id%>">Delete</button>
           </form>
         </td>
         <td>
           <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/edititem.html">
-            <input type="text" class = "inputText" name="userinput" value="<%=content%>" placeholder="<%=item.getEditText()%>"/>
-            <button class="renameButton" type="submit" name="item" value="<%=content%>">Save Changes</button>
+            <input type="text" class = "inputText" name="userinput" value="<%=Filter.filter(item.getContents())%>" placeholder="<%=item.getEditText()%>"/>
+            <button class="renameButton" type="submit" name="item" value="<%=id%>">Save Changes</button>
           </form>
         </td>
       </tr>
     <%itemIndex++;
     }else{
-      session.setAttribute(list.getContents(), list);
-      String content = Filter.parse(list.getContents());%>
+      String id = list.getId() + "";
+      session.setAttribute(id, list);%>
       <tr>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-            <input class="listButton" type="submit" name="content" value="<%=content%>">
+            <button class="listButton" type="submit" name="content" value="<%=id%>"><%=list.display()%></button>
           </form>
         </td>
         <td>
           <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deletelist.html">
-            <button class="deleteButton" type="submit" name="list" value="<%=content%>">Delete</button>
+            <button class="deleteButton" type="submit" name="list" value="<%=id%>">Delete</button>
           </form>
         </td>
         <td>
-          <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/renamelist.html">
-            <input type="text" class = "inputText" name="userinput" value="<%=content%>" placeholder="<%=list.getEditText()%>"/>
-            <button class="renameButton" type="submit" name="list" value="<%=content%>">Rename</button>
+          <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/editlist.html">
+            <input type="text" class = "inputText" name="userinput" value="<%=Filter.filter(list.getContents())%>" placeholder="<%=list.getEditText()%>"/>
+            <button class="renameButton" type="submit" name="list" value="<%=id%>">Rename</button>
           </form>
         </td>
       </tr>
@@ -86,8 +86,8 @@
   <%
   while (itemIndex < items.size()){
     Item item = items.get(itemIndex);
-    session.setAttribute(item.getContents(), item);
-    String content = Filter.parse(item.getContents());
+    String id = item.getId() + "";
+    session.setAttribute(id, item);
 %>
     <tr>
       <td>
@@ -95,13 +95,13 @@
       </td>
       <td>
         <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deleteitem.html">
-          <button class="deleteButton"  type="submit" name="item" value="<%=content%>">Delete</button>
+          <button class="deleteButton"  type="submit" name="item" value="<%=id%>">Delete</button>
         </form>
       </td>
       <td>
         <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/edititem.html">
-          <input type="text" class = "inputText" name="userinput" value="<%=content%>" placeholder="<%=item.getEditText()%>"/>
-          <button class="renameButton" type="submit" name="item" value="<%=content%>">Save Changes</button>
+          <input type="text" class = "inputText" name="userinput" value="<%=Filter.filter(item.getContents())%>" placeholder="<%=item.getEditText()%>"/>
+          <button class="renameButton" type="submit" name="item" value="<%=id%>">Save Changes</button>
         </form>
       </td>
     </tr>
@@ -109,23 +109,23 @@
   }
     while (listIndex < lists.size()){
       Item list = lists.get(listIndex);
-      session.setAttribute(list.getContents(), list);
-      String content = Filter.parse(list.getContents());%>
+      String id = list.getId() + "";
+      session.setAttribute(id, list);%>
       <tr>
         <td>
           <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
-            <input class="listButton" type="submit" name="content" value="<%=content%>">
+            <button class="listButton" type="submit" name="content" value="<%=id%>"><%=list.display()%></button>
           </form>
         </td>
         <td>
           <form method="POST" onsubmit="return confirm('Do you really want to delete this item?');" action="${pageContext.request.contextPath}/deletelist.html">
-            <button class="deleteButton" type="submit" name="list" value="<%=content%>">Delete</button>
+            <button class="deleteButton" type="submit" name="list" value="<%=id%>">Delete</button>
           </form>
         </td>
         <td>
-          <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/renamelist.html">
-            <input type="text" class = "inputText" name="userinput" value="<%=content%>" placeholder="<%=list.getEditText()%>"/>
-            <button class="renameButton" type="submit" name="list" value="<%=content%>">Rename</button>
+          <form method="POST" onsubmit="return submitForm(this)" action="${pageContext.request.contextPath}/editlist.html">
+            <input type="text" class = "inputText" name="userinput" value="<%=Filter.filter(list.getContents())%>" placeholder="<%=list.getEditText()%>"/>
+            <button class="renameButton" type="submit" name="list" value="<%=id%>">Rename</button>
           </form>
         </td>
       </tr>
@@ -133,9 +133,8 @@
 }
 %>
 </table>
-<form class="inputForm" onsubmit="return submitForm(this)" method="POST" action="${pageContext.request.contextPath}/additem.html"> <!-- this indicates a request which gets mapped to a servlet
-     could have multiple requests to same servlet -->
-  <p>One you enter something, you can choose to add text, a list, an image or a URL from it. Note that urls must be written in the correct form and images can only be added from a url to the image.</p>
+<form class="inputForm" onsubmit="return submitForm(this)" method="POST" action="${pageContext.request.contextPath}/additem.html">
+  <p>Once you enter something, you can choose to add text, a list, an image or a URL from it. Note that images can only be added from a url to the image.</p>
   <input type="text" class="inputText" name="userinput" placeholder="Enter contents here"/>
   <input type="submit" class="searchButton" name="add" value="Add text"/>
   <input type="submit" class="searchButton" name="add" value="Add list"/>

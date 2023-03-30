@@ -72,7 +72,7 @@ public class Model
           case URL -> list.addItem(new URL(id, content));
           case TEXT -> list.addItem(new Text(id, content));
           case IMG -> list.addItem(new Image(id, content));
-          case LIST -> list.addItem(new ItemList(id, content));
+          case LIST -> list.addList(new ItemList(id, content));
         }
         updateJson();
         return; // Break out of loop and recursion once found.
@@ -90,7 +90,7 @@ public class Model
   }
 
   public void addMainList(String name){
-    main.addItem(new ItemList(main.getChildId(), name));
+    main.addList(new ItemList(main.getChildId(), name));
     updateJson();
   }
 

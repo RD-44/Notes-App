@@ -18,7 +18,7 @@ public class DeleteListServlet extends HttpServlet {
         Model model = ModelFactory.getModel();
         ItemList parent = (ItemList) request.getSession().getAttribute("curr"); // Gets list containing list to delete
         ItemList listToDelete = (ItemList) request.getSession().getAttribute(request.getParameter("list"));
-        model.delList(listToDelete, parent); // Deletes list and updates file
+        model.delList(listToDelete, parent);
         request.setAttribute("list", parent); // Sets list after deletion of nested list as an attribute
         //Invoke the right JSP page depending on whether parent list is the main list or a nested list
         ServletContext context = getServletContext();

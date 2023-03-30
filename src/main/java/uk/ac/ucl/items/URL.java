@@ -9,8 +9,8 @@ public class URL extends Item{
     }
 
     public String display() {
-        return "<a href=\""+ Filter.parse(contents) + "\">"+ Filter.parse(contents) + "</a>";
-    } // Uses appropriate HTML code to display a link.
+        return "<a href=\""+ Filter.filter(contents) + "\" target=\"_blank\" >"+ Filter.filter(contents) + "</a>";
+    } // Uses appropriate HTML code to display a link which goes to a new tab on click
 
     public String getEditText() {
         return "Enter new url here:";

@@ -9,7 +9,7 @@ public class Image extends Item{
     }
 
     public String display() {
-        return "<img src=\""+ Filter.parse(contents) + "\">";
+        return "<img src=\""+ Filter.filter(contents) + "\">";
     } // Adds in HTML code to display the image
 
     public String getEditText() {
