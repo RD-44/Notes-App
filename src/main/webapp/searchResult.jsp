@@ -36,7 +36,7 @@
       </ul>
       <h2>Click below to go to <%=list.display()%>:</h2>
       <%}%>
-      <!--If just the note name itself matches, then the below alone will be outputted. -->
+      <!--If just the list name itself matches, then the below alone will be outputted. -->
       <form method="POST" action="${pageContext.request.contextPath}/getlistcontent.html">
         <button class="listButton" type="submit" name="content" value="<%=id%>"><%=list.display()%></button>
       </form>
